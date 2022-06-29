@@ -16,7 +16,7 @@
 
 -- MAGIC %sql
 -- MAGIC 
--- MAGIC USE awproject
+-- MAGIC USE somjit_practice
 
 -- COMMAND ----------
 
@@ -36,6 +36,14 @@ SHOW TABLES
 -- MAGIC Inner Join only returns rows that have a match on the left and right side of the join.
 -- MAGIC In many cases, tables are assumed to always have matching rows on both sides.
 -- MAGIC But you need to test this hypothesis.
+
+-- COMMAND ----------
+
+DESCRIBE dimproduct;
+
+-- COMMAND ----------
+
+DESCRIBE dimproductsubcategory;
 
 -- COMMAND ----------
 
@@ -182,5 +190,5 @@ SELECT     p.ProductKey, p.EnglishProductName as Product, p.ProductSubcategoryKe
 FROM       dimproduct                 p
 ANTI JOIN  dimproductsubcategory      psc
 ON (p.ProductSubcategoryKey = psc.ProductSubcategoryKey)
-WHERE psc.ProductSubcategoryKey IS NULL  -- This column is not in the results
+--WHERE psc.ProductSubcategoryKey IS NULL  -- This column is not in the results
 LIMIT 3
