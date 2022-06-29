@@ -18,7 +18,7 @@
 -- COMMAND ----------
 
 -- DBTITLE 1,Change to the aw database context
-USE awproject
+USE somjit_practice
 
 -- COMMAND ----------
 
@@ -105,7 +105,7 @@ SHOW CREATE TABLE t_productinfo
 
 -- COMMAND ----------
 
-use awproject
+use somjit_practice
 
 -- COMMAND ----------
 
@@ -156,7 +156,8 @@ CASE WHEN Age < 18 THEN 'Minor'
      WHEN Age BETWEEN 19 AND 29 THEN 'Young' 
      WHEN Age BETWEEN 30 AND 39 THEN 'Middle' 
      WHEN Age BETWEEN 40 AND 49 THEN 'Late Middle' 
-     WHEN Age > 50 THEN 'Golden' ELSE 'Other' END as AgeBand, 
+     WHEN Age > 50 THEN 'Golden' 
+     ELSE 'Other' END as AgeBand, 
 vc.Education, vc.NumberCarsOwned, vc.CommuteDistance,
 d.FiscalYear, d.FiscalQuarter, 
 d.EnglishMonthName as Month, MonthNumberOfYear, d.CalendarYear
@@ -176,7 +177,7 @@ ON (s.OrderDateKey = d.DateKey)
 
 -- COMMAND ----------
 
--- DBTITLE 1,Using a CTE to determine what years do we have complete data for?
+-- DBTITLE 1,Using a CTE (Common Table Expression) to determine what years do we have complete data for?
 WITH cte_check_months as
 (
 SELECT FiscalYear, MonthNumberOfYear, COUNT(*) as NumSales
@@ -204,9 +205,14 @@ ORDER BY TotalSales DESC
 with cte_countrycodes as
 (
 SELECT salesterritorykey,
-       CASE SalesTerritoryCountry WHEN 'United States' THEN 'USA' WHEN 'United Kingdom' THEN 'GBR' 
+       CASE SalesTerritoryCountry 
+       WHEN 'United States' THEN 'USA' 
+       WHEN 'United Kingdom' THEN 'GBR' 
        WHEN 'Canada' THEN 'CAN' 
-       WHEN 'France' THEN 'FRA' WHEN 'Australia' THEN 'AUS' WHEN 'Germany' THEN 'DEU' ELSE 'NA' END as CountryCD
+       WHEN 'France' THEN 'FRA' 
+       WHEN 'Australia' THEN 'AUS' 
+       WHEN 'Germany' THEN 'DEU' 
+       ELSE 'NA' END as CountryCD
 from dimsalesterritory t
 )
 
@@ -279,6 +285,13 @@ DESCRIBE t_salesinfo
 
 -- DBTITLE 1,Enter your answer in the cell below
 
+SELECT c.NumberChildrenAtHome as numChildren, SUM(s.SalesAmount) as TotalSales
+FROM t_salesinfo s
+INNER JOIN
+t_customerinfo c
+ON (s.CustomerKey = c.CustomerKey)
+GROUP BY numChildren;
+
 
 -- COMMAND ----------
 
@@ -304,7 +317,13 @@ GROUP BY c.NumberChildrenAtHome
 -- COMMAND ----------
 
 -- DBTITLE 1,Enter your answer in the cell below
-
+SELECT c.NumberChildrenAtHome as numChildren, ROUND(SUM(s.SalesAmount)) as TotalSales
+FROM t_salesinfo s
+INNER JOIN
+t_customerinfo c
+ON (s.CustomerKey = c.CustomerKey)
+GROUP BY numChildren
+ORDER BY TotalSales DESC;
 
 -- COMMAND ----------
 
@@ -336,7 +355,12 @@ ORDER BY SUM(SalesAmount) DESC
 -- COMMAND ----------
 
 -- DBTITLE 1,Enter your answer in the cell below
-
+SELECT s.FiscalYear, c.Gender, ROUND(AVG(s.SalesAmount)) as avgSales
+FROM t_salesinfo            s
+INNER JOIN t_customerinfo   c
+ON (s.CustomerKey = c.CustomerKey)
+GROUP BY s.FiscalYear, c.Gender
+ORDER BY s.FiscalYear, c.Gender, avgSales;
 
 -- COMMAND ----------
 
