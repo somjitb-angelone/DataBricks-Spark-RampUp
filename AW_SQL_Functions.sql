@@ -12,12 +12,6 @@
 -- COMMAND ----------
 
 -- MAGIC %md
--- MAGIC 
--- MAGIC #### The awproject database was created in a prior video which will be in this video descriptionn.
-
--- COMMAND ----------
-
--- MAGIC %md
 -- MAGIC # Apache Spark Functions documentation
 -- MAGIC ### https://spark.apache.org/docs/2.3.1/api/sql/index.html
 -- MAGIC ### https://spark.apache.org/docs/3.1.1/sql-ref-functions.html
@@ -25,7 +19,7 @@
 -- COMMAND ----------
 
 -- DBTITLE 1,Change to the aw database context
-USE awproject
+USE somjit_practice
 
 -- COMMAND ----------
 
@@ -123,12 +117,19 @@ DESCRIBE TABLE factinternetsales
 
 -- MAGIC %md
 -- MAGIC #### 1)
--- MAGIC #### Query factinternetsales showing the OrderDate, the first five characters as SalesOrderNumber,  
+-- MAGIC #### Query factinternetsales showing the OrderDate, the first five characters of the SalesOrderNumber,  
 -- MAGIC #### the length of SalesOrderNumber, and the SalesAmount.
 
 -- COMMAND ----------
 
 --  Code your answer here...
+SELECT OrderDate,
+       LEFT(SalesOrderNumber, 5) as `First 5 Characters`,
+       LENGTH(SalesOrderNumber) as `Character Length`,
+       SalesAmount as `Sales Amount`
+       
+FROM factinternetsales
+LIMIT 20;
 
 -- COMMAND ----------
 
@@ -149,6 +150,16 @@ limit 5
 -- COMMAND ----------
 
 -- Code your answer here.
+
+SELECT SalesTerritoryKey as `Territory Key`,
+       SUM(SalesAmount) as `Total Sales`,
+       AVG(SalesAmount) as `Average Sales`,
+       (SUM(SalesAmount) - AVG(SalesAmount)) as `Sales Over Avg`
+       
+FROM factinternetsales
+GROUP BY SalesTerritoryKey
+HAVING `Total Sales` > 6000
+LIMIT 10;
 
 -- COMMAND ----------
 
