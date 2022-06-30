@@ -27,7 +27,7 @@
 
 -- COMMAND ----------
 
-USE awproject
+USE somjit_practice
 
 -- COMMAND ----------
 
@@ -233,6 +233,6 @@ SELECT * FROM productlist2
 
 -- COMMAND ----------
 
-SELECT * FROM VALUES (1), (2), (3), (4), (4), (9), (9)
-EXCEPT ALL 
+SELECT * FROM VALUES (1), (2), (3), (3), (4), (4), (9), (9)
+EXCEPT ALL
 SELECT * FROM VALUES (2), (3), (5), (6)
