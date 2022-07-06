@@ -19,7 +19,7 @@
 
 -- MAGIC %md
 -- MAGIC # Apache Spark Window Functions documentation
--- MAGIC #### https://spark.apache.org/docs/2.3.1/api/sql/index.html
+-- MAGIC #### [https://spark.apache.org/docs/2.3.1/api/sql/index.html](https://spark.apache.org/docs/2.3.1/api/sql/index.html)
 -- MAGIC #### http://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-window.html
 -- MAGIC #### https://jaceklaskowski.gitbooks.io/mastering-spark-sql/content/spark-sql-functions-windows.html
 -- MAGIC 
@@ -39,7 +39,7 @@
 -- COMMAND ----------
 
 -- DBTITLE 1,Change to the aw database context
-USE awproject
+USE somjit_practice
 
 -- COMMAND ----------
 
