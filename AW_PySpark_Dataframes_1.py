@@ -59,7 +59,7 @@
 # COMMAND ----------
 
 # DBTITLE 1,Code Cell 1 - Use Spark SQL to load a PySpark dataframe from the factinternetsales...
-spark.sql('use awproject')
+spark.sql('use somjit_practice')
 spdf_salesinfo = spark.sql('select * from factinternetsales').dropna()
 
 # COMMAND ----------
@@ -96,8 +96,12 @@ spdf_salesinfo.columns
 
 # COMMAND ----------
 
+
+
+# COMMAND ----------
+
 # DBTITLE 1,Code Cell 6 - Adding a column to a dataframe
-spdf_salesinfo = spdf_salesinfo.withColumn('TaxRate',  spdf_salesinfo.TaxAmt / spdf_salesinfo.SalesAmount)
+spdf_salesinfo = spdf_salesinfo.withColumn('TaxRate',  QR5509.TaxAmt / spdf_salesinfo.SalesAmount)
 
 # COMMAND ----------
 
@@ -133,6 +137,10 @@ where countryregioncode = 'US'
 
 # COMMAND ----------
 
+spark.sql('''select * from t_salesinfoextract limit 3''')
+
+# COMMAND ----------
+
 # DBTITLE 1,Code Cell 9 - Query the new table
 spark.sql('''select * from t_salesinfoextract limit 3''').collect()
 
@@ -152,6 +160,10 @@ type(lpdf_salesinfo)
 # DBTITLE 1,Code Cell 12 - Convert the Spark dataframe to pandas
 lpdf_salesinfo = spark.sql('''select * from t_salesinfoextract limit 3''').toPandas()
 lpdf_salesinfo
+
+# COMMAND ----------
+
+lpdf_salesinfo.columns
 
 # COMMAND ----------
 
@@ -212,6 +224,11 @@ spdf_salesinfo.write.mode("overwrite").format("parquet").option("path","/aw/parq
 
 # DBTITLE 1,Code Cell 18 - Spark Dataframe createOrReplaceTempView
 spdf_salesinfo.createOrReplaceTempView("tv_salesinfo")
+
+# COMMAND ----------
+
+display(spark.sql('''SELECT * FROM tv_salesinfo LIMIT 20'''))
+
 
 # COMMAND ----------
 
